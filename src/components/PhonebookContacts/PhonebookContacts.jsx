@@ -1,4 +1,4 @@
-export const PhonebookContacts = ({ contacts, onDeleteContact }) => {
+const PhonebookContacts = ({ contacts, onDeleteContact }) => {
   return (
     <div>
       <h2>Contacts</h2>
@@ -13,3 +13,5 @@ export const PhonebookContacts = ({ contacts, onDeleteContact }) => {
     </div>
   );
 };
+
+export default PhonebookContacts;
