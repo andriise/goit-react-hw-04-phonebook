@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import { nanoid } from 'nanoid';
 import { PhonebookForm } from './PhonebookForm/PhonebookForm';
-import  PhonebookContacts  from './PhonebookContacts/PhonebookContacts';
+import PhonebookContacts from './PhonebookContacts/PhonebookContacts';
 import { Filter } from './Filter/Filter';
 import { Container } from './App.styled';
-import { server } from './server';
 
 export const App = () => {
   const [contacts, setContacts] = useState(() => {
@@ -13,16 +12,6 @@ export const App = () => {
     return parsedContacts || [];
   });
   const [filter, setFilter] = useState('');
-  useEffect(() => {
-    const saveContact = localStorage.getItem('contacts');
-    if (saveContact) {
-      const contactsParse = JSON.parse(saveContact);
-
-      setContacts({ contacts: contactsParse });
-      return;
-    }
-    setContacts({ contacts: server });
-  }, []);
 
   useEffect(() => {
     window.localStorage.setItem('contacts', JSON.stringify(contacts));
@@ -34,7 +23,6 @@ export const App = () => {
       name,
       number,
     };
-
     if (contacts.find(item => item.name.toLowerCase() === name.toLowerCase())) {
       alert(`${name} is already in contacts`);
       return;
@@ -48,14 +36,11 @@ export const App = () => {
   const onChange = e => {
     setFilter(e.currentTarget.value);
   };
+  console.log(contacts)
   const valueFilter = filter.toLowerCase();
   const filterName = contacts.filter(contact =>
     contact.name.toLowerCase().includes(valueFilter)
   );
-
-  // const filterName = contacts.filter(contact =>
-  //   contact.name.toLowerCase().includes(valueFilter)
-  // );
 
   const deleteContact = id => {
     setContacts(contacts.filter(contact => contact.id !== id));
